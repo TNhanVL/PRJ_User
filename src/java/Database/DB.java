@@ -58,6 +58,21 @@ public class DB {
         return dataList;
     }
 
+    public static boolean checkUserExist(String username) {
+        boolean found = false;
+        try {
+            connect();
+            statement = conn.prepareStatement("select user_name from user where user_name = ?");
+            statement.setString(1, username);
+            ResultSet resultSet = statement.executeQuery();
+            found = resultSet.next();
+            disconnect();
+        } catch (SQLException | ClassNotFoundException ex) {
+            Logger.getLogger(DB.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return found;
+    }
+
     public static void insertUser(User user) {
         try {
             connect();
@@ -100,17 +115,16 @@ public class DB {
     }
 
     public static void main(String[] args) {
-        try {
-            connect();
-            statement = conn.prepareStatement("update user set user_name=?, password=?, full_name=? where id=?");
-            statement.setString(1, "nhan");
-            statement.setString(2, "nhan");
-            statement.setString(3, "nhan");
-            statement.setString(4, "56");
-            statement.executeUpdate();
-            disconnect();
-        } catch (SQLException | ClassNotFoundException ex) {
-            Logger.getLogger(DB.class.getName()).log(Level.SEVERE, null, ex);
-        }
+//        try {
+//            connect();
+//            statement = conn.prepareStatement("select user_name from user where user_name = 'ttNhan'");
+//            ResultSet resultSet = statement.executeQuery();
+//            boolean found = resultSet.next();
+//            disconnect();
+//            System.out.println(found);
+//        } catch (SQLException | ClassNotFoundException ex) {
+//            Logger.getLogger(DB.class.getName()).log(Level.SEVERE, null, ex);
+//        }
+        System.out.println(checkUserExist("Nhan"));
     }
 }

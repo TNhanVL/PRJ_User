@@ -66,9 +66,12 @@
                                     <tr><td colspan="5"><form action="edit" method="post" id="editUserForm">
                                                 <div class="card-body">
                                                     <div class="form-group" style="display: none">
-                                                        <label for="exampleInputEmail1">ID</label>
                                                         <input type="text" class="form-control" id="id"
                                                                name="id" placeholder="User Name" value="<%out.println(dataList.get(i).getID());%>" required>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label for="exampleInputEmail1">ID</label>
+                                                        <input type="text" class="form-control" value="<%out.println(dataList.get(i).getID());%>" disabled>
                                                     </div>
                                                     <div class="form-group">
                                                         <label for="exampleInputEmail1">User Name</label>

@@ -23,6 +23,8 @@
   <link rel="stylesheet" href="./public/dist/css/adminlte.min.css">
   
   <link rel="stylesheet" href="./public/dist/css/styles.css">
+  
+  <script src="https://cdn.ckeditor.com/ckeditor5/37.1.0/classic/ckeditor.js"></script>
 </head>
 <body class="hold-transition sidebar-mini">
 <div class="wrapper">

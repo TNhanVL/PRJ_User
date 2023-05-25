@@ -5,6 +5,7 @@ package Controller;
  * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Servlet.java to edit this template
  */
 import Model.User;
+import Database.DB;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
@@ -12,6 +13,7 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import java.util.ArrayList;
 
 /**
  *
@@ -64,7 +66,7 @@ public class UserController extends HttpServlet {
                 String query = request.getQueryString();
                 if (query.split("=")[0].equals("id")) {
                     int ID = Integer.parseInt(query.split("=")[1]);
-                    Database.DB.deleteUser(ID);
+                    DB.deleteUser(ID);
                 }
                 break;
             }
@@ -110,10 +112,16 @@ public class UserController extends HttpServlet {
     public void addUser(HttpServletRequest request) {
         User user;
         String username = request.getParameter("username");
-        String password = request.getParameter("password");
+        String password = MD5.getMd5(request.getParameter("password"));
         String fullname = request.getParameter("fullname");
         user = new User(username, password, fullname);
-        Database.DB.insertUser(user);
+
+        //check exist user
+        if (DB.checkUserExist(username)) {
+//            errorList.add("User name have already exist");
+        } else {
+            DB.insertUser(user);
+        }
     }
 
     public void editUser(HttpServletRequest request) {
@@ -123,7 +131,12 @@ public class UserController extends HttpServlet {
         String password = request.getParameter("password");
         String fullname = request.getParameter("fullname");
         user = new User(ID, username, password, fullname);
-        Database.DB.updateUser(user);
+        //check exist user
+        if (DB.checkUserExist(username)) {
+//            errorList.add("User name have already exist");
+        } else {
+            DB.updateUser(user);
+        }
     }
 
     /**
